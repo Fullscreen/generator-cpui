@@ -3,8 +3,6 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 
-
-
 module.exports = yeoman.generators.Base.extend({
   init: function() {
     var config = this.dest.readJSON('bower.json').yoconfig
@@ -29,11 +27,19 @@ module.exports = yeoman.generators.Base.extend({
       this.copy('gitkeep', path+'/.gitkeep')
     }
 
+    this.argument('module', {
+      desc: "The name of your new module",
+      required: false,
+      type: 'string'
+    })
+
     this.log(yosay("Let's create you a new module!"))
   },
 
 
   askFor: function() {
+    if (this.module) { return }
+
     var done = this.async()
       , self = this
 
@@ -43,7 +49,7 @@ module.exports = yeoman.generators.Base.extend({
       required: true,
       type: 'input'
     }, function(resp) {
-      self.module = resp.module
+      self.args[0] = resp.module
       done()
     })
   },
