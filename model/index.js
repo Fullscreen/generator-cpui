@@ -1,33 +1,11 @@
-var yeoman = require('yeoman-generator')
+var NamedBase = require('../lib/module-and-named-base.js')
   , yosay = require('yosay')
   , path = require('path')
-  , CPUI = require('../lib/cpui-base')
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = NamedBase.extend({
   init: function() {
-    // Inherit our base class
-    CPUI.extend(this)
-
-    this.argument('module', {
-      desc: "The module we'll be adding your model to",
-      type: String,
-      required: true
-    })
-
-    this.argument('model', {
-      desc: "The name of your new model",
-      type: String,
-      required: true
-    })
-
-    try {
-      this.dest.read(path.join(this.cpui.paths.scripts, this.module, 'index.coffee'))
-      this.log(yosay("Let's create you a new model!"))
-    } catch(e) {
-      this.log(yosay("Oops! Looks like you haven't created a \""+this.module+"\" module yet!"))
-      this.log("Run `yo cpui "+this.module+"` to create the module and try again!")
-      process.exit(1)
-    }
+    this.log(yosay("Let's create you a new model!"))
+    this.model = this.name
   },
 
   files: function() {

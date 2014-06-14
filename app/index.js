@@ -1,42 +1,14 @@
-var yeoman = require('yeoman-generator')
+var Base = require('../lib/cpui-base')
   , yosay = require('yosay')
   , path = require('path')
-  , CPUI = require('../lib/cpui-base')
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = Base.extend({
   init: function() {
-
-    // Inherit our base class
-    CPUI.extend(this)
-
-    this.argument('module', {
-      desc: "The name of your new module",
-      required: false,
-      type: String
-    })
-
-    this.log(yosay("Let's create you a new module!"))
+    this.log(yosay("Let's create you a new directive!"))
+    this.model = this.name
   },
 
-
-  askFor: function() {
-    if (this.module) { return }
-
-    var done = this.async()
-      , self = this
-
-    this.prompt({
-      message: "What are we calling your new module?",
-      name: 'module',
-      required: true,
-      type: 'input'
-    }, function(resp) {
-      self.args[0] = resp.module
-      done()
-    })
-  },
-
-  createFiles: function() {
+  files: function() {
     var paths = this.cpui.paths
 
     // Module directory
