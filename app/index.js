@@ -53,6 +53,7 @@ module.exports = yeoman.generators.Base.extend({
     this.makeKeep(this.paths.specs +'/'+ this.module)
     this.makeKeep(this.paths.styles +'/'+ this.module)
     this.template('_index.coffee', this.paths.scripts +'/'+ this.module + '/index.coffee')
+    this.copy('empty.scss', this.paths.styles +'/'+ this.module + '/index.scss')
   },
 
   // Inject our `fs.module` entry into the dependencies
