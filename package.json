@@ -1,0 +1,24 @@
+{
+  "name": "generator-cpui",
+  "version": "0.0.0",
+  "description": "Custom code generator for Creator Platform Angular modules",
+  "license": "none",
+  "private": true,
+  "main": "app/index.js",
+  "repository": "Fullscreen/generator-cpui",
+  "author": {
+    "name": "Paul Sweeney",
+    "email": "paul@8-bitdesign.com",
+    "url": "https://github.com/8bitDesigner"
+  },
+  "files": [
+    "app"
+  ],
+  "dependencies": {
+    "yosay": "^0.1.0",
+    "yeoman-generator": "~0.17.0"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
