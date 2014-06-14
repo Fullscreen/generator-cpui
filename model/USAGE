@@ -1,0 +1,10 @@
+Description:
+    Creates a new CPUI model in an existing module
+
+Example:
+    yo cpui:model [module name] [model name]
+
+    This will create:
+      * app/assets/scripts/[module]/models/[model].coffee
+      * spec/js/[module]/models/[model].coffee
+

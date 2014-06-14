@@ -1,36 +1,18 @@
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
+var yeoman = require('yeoman-generator')
+  , yosay = require('yosay')
+  , path = require('path')
+  , CPUI = require('../lib/cpui-base')
 
 module.exports = yeoman.generators.Base.extend({
   init: function() {
-    var config = this.dest.readJSON('bower.json').yoconfig
-      , self = this
 
-    // Figure out where to poop things on disk
-    this.paths = {
-      scripts: config.appPath+'/scripts',
-      styles: config.appPath+'/stylesheets',
-      specs: config.specPath
-    }
-
-    // And what module should we require?
-    this.rootModule = config.rootModule
-
-    this.sep = config.separators
-    this.ns = config.namespace
-
-    // Create a git-addable directory
-    this.makeKeep = function (path) {
-      this.mkdir(path)
-      this.copy('gitkeep', path+'/.gitkeep')
-    }
+    // Inherit our base class
+    CPUI.extend(this)
 
     this.argument('module', {
       desc: "The name of your new module",
       required: false,
-      type: 'string'
+      type: String
     })
 
     this.log(yosay("Let's create you a new module!"))
@@ -54,30 +36,31 @@ module.exports = yeoman.generators.Base.extend({
     })
   },
 
-  createStubFiles: function() {
-    this.makeKeep(this.paths.scripts +'/'+ this.module)
-    this.makeKeep(this.paths.specs +'/'+ this.module)
-    this.makeKeep(this.paths.styles +'/'+ this.module)
-    this.template('_index.coffee', this.paths.scripts +'/'+ this.module + '/index.coffee')
-    this.copy('empty.scss', this.paths.styles +'/'+ this.module + '/index.scss')
+  createFiles: function() {
+    var paths = this.cpui.paths
+
+    // Module directory
+    this.mkdir(path.join(paths.scripts, this.module))
+    this.template('_index.coffee', path.join(paths.scripts, this.module, 'index.coffee'))
+
+    // Stylesheets
+    this.mkdir(path.join(paths.specs, this.module))
+    this.copy('gitkeep', path.join(paths.specs, this.module, '.gitkeep'))
+
+    // Stylesheets
+    this.mkdir(path.join(paths.styles, this.module))
+    this.copy('empty.scss', path.join(paths.styles, this.module, 'index.scss'))
   },
 
   // Inject our `fs.module` entry into the dependencies
   // for the main CPUI app
   rewriteAppCoffee: function() {
-    var appCoffee = this.paths.scripts + '/app.coffee'
+    var appCoffee = path.join(this.cpui.paths.scripts, 'app.coffee')
       , contents = this.readFileAsString(appCoffee)
-      , self = this
-
-    function inject(str, section) {
-      var placeholder = self.sep.post+section
-        , newContent = str + "\n" + placeholder
-      return contents.replace(placeholder, newContent)
-    }
 
     // Inject our module dependencies
-    contents = inject("#= require "+this.module, "Requiring our modules")
-    contents = inject("  '"+this.ns+this.module+"'", "Our modules")
+    contents = this.append(contents, "Requiring our modules", "#= require "+this.module)
+    contents = this.append(contents, "Our modules", "  '"+this.namespace(this.module)+"'")
 
     this.dest.write(appCoffee, contents)
   }
