@@ -1,0 +1,10 @@
+Description:
+    Creates a new CPUI controller
+
+Example:
+    yo cpui foo bar
+
+    This will create:
+      * /app/assets/scripts/foo/controllers/bar.coffee
+      * /spec/js/foo/controllers/bar.coffee
+

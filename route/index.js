@@ -30,7 +30,6 @@ module.exports = Base.extend({
       , routes = this.dest.read(routesPath)
       , newRoute = this.src.read('_route')
 
-    console.log(routes)
     routes = this.append(routes, "App routes", this.engine(newRoute, this))
 
     this.dest.write(routesPath, routes)

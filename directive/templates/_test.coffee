@@ -14,7 +14,7 @@ describe 'The <%= directive %> directive', ->
         $rootScope.$digest()
       [el, el.scope()] # Returns the element and its scope
 
-  it "should start with a copy of its model's attributes", ->
+  it "should have tests", ->
     greeting = 'Hello, Bob'
     [el, scope] = factory(name: 'Bob') # $rootsScope.name = 'Bob'
 
@@ -22,3 +22,4 @@ describe 'The <%= directive %> directive', ->
     expect(scope.greeting).toBe(greeting)
 
     expect("The really awesome, (did I mention you look great today?) developer to have written tests").toBe(false)
+

@@ -1,0 +1,14 @@
+Description:
+    Creates a new route
+
+Example:
+    yo cpui foo
+
+    This will create:
+      * /app/assets/scripts/templates/foo-page.html
+      * /app/assets/scripts/controllers/foo.coffee
+
+    As well as add a `/foo` route definition in
+      * /app/assets/scripts/config/routes.coffee
+      * /config/routes.rb
+
