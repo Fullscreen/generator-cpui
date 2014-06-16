@@ -37,5 +37,13 @@ module.exports = Base.extend({
     contents = this.append(contents, "Our modules", "  '"+this.namespace(this.module)+"'")
 
     this.dest.write(appCoffee, contents)
+  },
+
+  addTestsToKarma: function() {
+    var testFiles = 'karma.files.json'
+      , files = JSON.parse(this.readFileAsString(testFiles))
+
+    files.modules.push(this.module)
+    this.dest.write(testFiles, JSON.stringify(files, null, 2))
   }
 });
