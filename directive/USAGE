@@ -1,0 +1,10 @@
+Description:
+    Creates a new CPUI directive
+
+Example:
+    yo cpui:directive <module name> <directive name>
+
+    This will create:
+      * /app/assets/scripts/[your module name]/directives/[your directive].coffe
+      * /app/assets/scripts/[your module name]/templates/[your directive].coffee
+      * /spec/js/[your module name]/directives/[your directive].coffee
