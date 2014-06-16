@@ -1,5 +1,5 @@
 Description:
-    Creates a new CPUI directive
+    Creates a new CPUI directive in an existing module
 
 Example:
     yo cpui:directive <module name> <directive name>

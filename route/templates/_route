@@ -1,0 +1,3 @@
+  '/<%= route %>':
+    templateUrl: '<%= routeTpml %>.html'
+    controller: '<%= routeTitle %>'

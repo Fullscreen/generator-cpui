@@ -1,12 +1,10 @@
-var Base = require('../lib/cpui-base')
+var Base = require('../lib/module-base.js')
   , yosay = require('yosay')
   , path = require('path')
 
 module.exports = Base.extend({
   init: function() {
-    this.log(yosay("Let's create you a new directive!"))
-    this.model = this.name
-
+    this.log(yosay("Let's create you a new module!"))
     this.config.save(); // Save a yo-rc.json in the project root
   },
 
@@ -46,4 +44,5 @@ module.exports = Base.extend({
     files.modules.push(this.module)
     this.dest.write(testFiles, JSON.stringify(files, null, 2))
   }
-});
+})
+
