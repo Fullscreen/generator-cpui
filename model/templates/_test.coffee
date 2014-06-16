@@ -3,7 +3,6 @@ describe "The <%= modelClass %> model", ->
 
   beforeEach ->
     module('<%= namespace(module) %>')
-    module('<%= cpui.rootModule %>')
 
     inject (_<%= modelClass %>_) ->
       <%= modelClass %> = _<%= modelClass %>_
