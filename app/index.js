@@ -6,6 +6,8 @@ module.exports = Base.extend({
   init: function() {
     this.log(yosay("Let's create you a new directive!"))
     this.model = this.name
+
+    this.config.save(); // Save a yo-rc.json in the project root
   },
 
   files: function() {
