@@ -1,4 +1,4 @@
-var Base = require('../lib/cpui-base')
+var Base = require('../lib/module-base.js')
   , pluralize = require('pluralize')
   , path = require('path')
 
@@ -8,45 +8,15 @@ module.exports = Base.extend({
     this.selections = {}
   },
 
-  // Prompt for the module name if it's not specified
-  getModuleName: function() {
-    if (this.module) { return }
-
+  getModule: function() {
     var done = this.async()
       , self = this
 
-    this.prompt([{
-      type: 'input',
-      name: 'module',
-      message: 'What module are we scaffolding out today?'
-    }], function (props) {
-      self.module = props.module
+    this.getModuleName(function(name) {
+      self.module = name
+      self.createModule()
       done()
     })
-  },
-
-  // Prompt to create the module if it doesn't exist already
-  createModule: function() {
-    if (this.moduleExists()) { return }
-
-    var done = this.async()
-      , self = this
-
-    this.prompt([{
-      type: 'confirm',
-      name: 'create',
-      message: "The \""+this.module+"\" module doesn't exist yet, should I create it?"
-    }], function (props) {
-      if (props.create) {
-        self.invoke('cpui:module', {args: [self.module]})
-      } else {
-        self.log("Nope? Sorry, can't help you then")
-        process.exit(1)
-      }
-
-      done()
-    })
-
   },
 
   gatherChoices: function() {
@@ -56,7 +26,7 @@ module.exports = Base.extend({
     this.prompt([{
       type: 'checkbox',
       name: 'choices',
-      message: "What do you want to add to you \""+this.module+"\" module?",
+      message: "What do you want to add to you "+this.module+" module?",
       choices: [
         { value: 'model', name: 'A model class', checked: true },
         { value: 'collection', name: 'A collection class', checked: true },
@@ -73,8 +43,11 @@ module.exports = Base.extend({
     if (!this.selections.model) { return }
 
     this.invoke('cpui:model', {
-      options: {mute: true},
-      args: [this.module, this.module]
+      options: {
+        mute: true,
+        module: this.module,
+        model: this.module
+      }
     })
   },
 
@@ -84,9 +57,10 @@ module.exports = Base.extend({
     this.invoke('cpui:collection', {
       options: {
         mute: true,
-        model: this.module
-      },
-      args: [this.module, pluralize(this.module)]
+        module: this.module,
+        model: this.module,
+        collection: pluralize(this.module)
+      }
     })
   },
 
@@ -96,11 +70,12 @@ module.exports = Base.extend({
     this.invoke('cpui:directive', {
       options: {
         mute: true,
+        module: this.module,
         hintHTML: false,
+        directive: this.module,
         model: (this.selections.model ? this.module : false),
         collection: (this.selections.collection ? pluralize(this.module) : false)
-      },
-      args: [this.module, this.module]
+      }
     })
   },
 
@@ -110,9 +85,9 @@ module.exports = Base.extend({
     this.invoke('cpui:route', {
       options: {
         mute: true,
+        route: pluralize(this.module),
         directive: this.module
-      },
-      args: [pluralize(this.module)]
+      }
     })
   },
 })

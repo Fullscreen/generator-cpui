@@ -1,11 +1,40 @@
-var NamedBase = require('../lib/module-and-named-base.js')
+var Base = require('../lib/module-base.js')
   , path = require('path')
 
-module.exports = NamedBase.extend({
+module.exports = Base.extend({
+  constructor: function() {
+    Base.apply(this, arguments)
+
+    this.option('controller', {
+      type: String,
+      desc: "The name of your new controller"
+    })
+  },
+
+  _setController: function(name) {
+    this.ctrlFile  = this._.dasherize(name)
+    this.ctrlClass = this._.classify(name + ' controller')
+  },
+
   init: function() {
     this.say("Let's create you a new controller!")
-    this.ctrlFile  = this._.dasherize(this.name)
-    this.ctrlClass = this._.classify(this.name + ' controller')
+    this.getModule(this.async())
+
+    if (this.options.controller) {
+      this._setController(this.options.controller)
+    }
+  },
+
+  getName: function() {
+    if (this.ctrlClass) { return; }
+
+    var done = this.async()
+      , self = this;
+
+    this.ask("What's the name of your controller?", function(name) {
+      self._setController(name)
+      done()
+    })
   },
 
   files: function() {

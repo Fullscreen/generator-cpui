@@ -2,7 +2,7 @@ Description:
     Creates a new CPUI controller
 
 Example:
-    yo cpui foo bar
+    yo cpui --module=foo --controller=bar
 
     This will create:
       * /app/assets/scripts/foo/controllers/bar.coffee

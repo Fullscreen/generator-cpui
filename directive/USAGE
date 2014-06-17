@@ -2,9 +2,9 @@ Description:
     Creates a new CPUI directive in an existing module
 
 Example:
-    yo cpui:directive <module name> <directive name>
+    yo cpui:directive --module=foo --directive=bar
 
     This will create:
-      * /app/assets/scripts/[your module name]/directives/[your directive].coffe
-      * /app/assets/scripts/[your module name]/templates/[your directive].coffee
-      * /spec/js/[your module name]/directives/[your directive].coffee
+      * /app/assets/scripts/foo/directives/bar.coffe
+      * /app/assets/scripts/foo/templates/bar.coffee
+      * /spec/js/foo/directives/bar.coffee

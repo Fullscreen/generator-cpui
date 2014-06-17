@@ -1,7 +1,28 @@
-var Base = require('../lib/cpui-base')
+var Base = require('../lib/cpui-base.js')
   , path = require('path')
 
 module.exports = Base.extend({
+  constructor: function() {
+    Base.apply(this, arguments)
+
+    this.option('route', {
+      type: String,
+      desc: "The name of your new route"
+    })
+
+    this.option('directive', {
+      desc: 'A directive to drop into your new page',
+      defaults: false
+    })
+  },
+
+  _setRoute: function(route) {
+    this.name       = route
+    this.route      = this._.dasherize(route)
+    this.routeTpml  = this._.dasherize(route + '-page')
+    this.routeTitle = this._.camelize(route + '-controller')
+  },
+
   init: function() {
     this.say("Let's create you a new route!")
 
@@ -9,25 +30,26 @@ module.exports = Base.extend({
     this.directive = undefined
     this.directiveTag = undefined
 
-    this.argument('name', {
-      desc: "The name of your new route",
-      type: String,
-      required: true
-    })
-
-    this.option('directive', {
-      desc: 'A directive to drop into your new page',
-      defaults: false
-    })
-
     if (this.options.directive) {
       this.directive = this._.dasherize(this.options.directive)
       this.directiveTag = "<"+this.directive+"></"+this.directive+">"
     }
 
-    this.route      = this._.dasherize(this.name)
-    this.routeTpml  = this._.dasherize(this.name + '-page')
-    this.routeTitle = this._.camelize(this.route + '-controller')
+    if (this.options.route) {
+      this._setRoute(this.options.route)
+    }
+  },
+
+  getName: function() {
+    if (this.route) { return; }
+
+    var done = this.async()
+      , self = this;
+
+    this.ask("What's the name of your route?", function(name) {
+      self._setRoute(name)
+      done()
+    })
   },
 
   files: function() {

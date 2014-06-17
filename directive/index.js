@@ -1,29 +1,47 @@
-var NamedBase = require('../lib/module-and-named-base.js')
+var Base = require('../lib/module-base.js')
   , pluralize = require('pluralize')
   , path = require('path')
 
-module.exports = NamedBase.extend({
-  init: function() {
-    this.say("Let's create you a new directive!")
+module.exports = Base.extend({
+  constructor: function() {
+    Base.apply(this, arguments)
 
-    // Initing vars we'll use in our underscore template
-    this.collection = undefined
-    this.model = undefined
+    this.option('directive', {
+      type: String,
+      desc: "The name of your new directive"
+    })
 
     this.option('collection', {
       desc: 'A collection to iterate over in your directive',
-      defaults: false
+      type: String
     })
 
     this.option('model', {
       desc: 'A model to use with a given collection',
-      defaults: false
+      type: String
     })
 
     this.option('hintHTML', {
       defaults: false,
+      type: Boolean,
       hidden: true
     })
+  },
+
+  _setDirective: function(name) {
+    this.directive = this._.camelize(name)
+    this.directiveDashed = this._.dasherize(name)
+    this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"
+  },
+
+  init: function() {
+    this.say("Let's create you a new directive!")
+    this.pluralize = pluralize
+    this.getModule(this.async())
+
+    // Initing vars we'll use in our underscore template
+    this.collection = undefined
+    this.model = undefined
 
     if (this.options.collection) {
       this.collection = this._.classify(this.options.collection)
@@ -33,10 +51,21 @@ module.exports = NamedBase.extend({
       this.model = this._.classify(this.options.model)
     }
 
-    this.pluralize = pluralize
-    this.directive = this._.camelize(this.name)
-    this.directiveDashed = this._.dasherize(this.name)
-    this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"
+    if (this.options.directive) {
+      this._setDirective(this.options.directive)
+    }
+  },
+
+  getName: function() {
+    if (this.directive) { return; }
+
+    var done = this.async()
+      , self = this;
+
+    this.ask("What's the name of your directive?", function(name) {
+      self._setDirective(name)
+      done()
+    })
   },
 
   files: function() {

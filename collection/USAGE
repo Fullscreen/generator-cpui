@@ -2,9 +2,9 @@ Description:
     Creates a new CPUI collection in an existing module
 
 Example:
-    yo cpui:collection [module name] [model name]
+    yo cpui:collection --module=foo --collection=bars
 
     This will create:
-      * app/assets/scripts/[module]/collections/[model].coffee
-      * spec/js/[module]/collections/[model].coffee
+      * app/assets/scripts/foo/collections/bars.coffee
+      * spec/js/foo/collections/bars.coffee
 

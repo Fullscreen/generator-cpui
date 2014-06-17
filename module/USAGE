@@ -2,14 +2,14 @@ Description:
     Creates a new CPUI module
 
 Example:
-    yo cpui [module name]
+    yo cpui:module --module=foo
 
     This will create:
-      * /app/assets/scripts/[your module name]
-      * /app/assets/scripts/[your module name]/index.coffee
-      * /app/assets/stylesheets/[your module name]
-      * /app/assets/scripts/[your module name]/index.scss
-      * /spec/js/[your module name]
+      * /app/assets/scripts/foo
+      * /app/assets/scripts/foo/index.coffee
+      * /app/assets/stylesheets/foo
+      * /app/assets/scripts/foo/index.scss
+      * /spec/js/foo
 
     As well as require your module in:
       * /app/assets/scripts/app.coffe

@@ -1,10 +1,39 @@
-var Base = require('../lib/module-base.js')
+var Base = require('../lib/cpui-base.js')
   , path = require('path')
 
 module.exports = Base.extend({
+  constructor: function() {
+    Base.apply(this, arguments)
+
+    this.option('module', {
+      type: String,
+      desc: "The name of your new module"
+    })
+  },
+
   init: function() {
     this.say("Let's create you a new module!")
-    this.config.save(); // Save a yo-rc.json in the project root
+
+    if (this.options.module) {
+      this.module = this.options.module
+    }
+  },
+
+  // Prompt for the module name if it's not specified
+  getModuleName: function() {
+    if (this.module) { return }
+
+    var done = this.async()
+      , self = this
+
+    this.prompt([{
+      type: 'input',
+      name: 'module',
+      message: "What's the name of your module?"
+    }], function (props) {
+      self.module = props.module
+      done()
+    })
   },
 
   files: function() {

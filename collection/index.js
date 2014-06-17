@@ -1,24 +1,44 @@
-var NamedBase = require('../lib/module-and-named-base.js')
+var Base = require('../lib/module-base.js')
   , path = require('path')
 
-module.exports = NamedBase.extend({
+module.exports = Base.extend({
+  constructor: function() {
+    Base.apply(this, arguments)
+
+    this.option('collection', {
+      type: String,
+      desc: "The name of your new collection"
+    })
+  },
+
+  _setCollection: function(name) {
+    this.collection = name
+    this.collectionClass = this._.classify(this.collection)
+  },
+
   init: function() {
     this.say("Let's create you a new collection!")
+    this.getModule(this.async())
 
-    // Initing vars we'll use in our underscore template
+    // Initing vars we might use in our underscore template
     this.model = undefined
+    if (this.options.model) { this.model = this._.classify(this.options.model) }
 
-    this.option('model', {
-      desc: 'A model to require for this collection',
-      defaults: false
-    })
-
-    if (this.options.model) {
-      this.model = this._.classify(this.options.model)
+    if (this.options.collection) {
+      this._setCollection(this.options.collection)
     }
+  },
 
-    this.collection = this.name
-    this.collectionClass = this._.classify(this.collection)
+  getName: function() {
+    if (this.collection) { return; }
+
+    var done = this.async()
+      , self = this;
+
+    this.ask("What's the name of your collection?", function(name) {
+      self._setCollection(name)
+      done()
+    })
   },
 
   files: function() {

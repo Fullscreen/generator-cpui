@@ -2,7 +2,7 @@ Description:
     Creates a new route
 
 Example:
-    yo cpui foo
+    yo cpui:route --route=foo
 
     This will create:
       * /app/assets/scripts/templates/foo-page.html
