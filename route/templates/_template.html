@@ -2,16 +2,20 @@
   <button class="sm" ng-click="sayHi()">Greet user</button>
 </div>
 
-<h1 class="page-title">{{ 'title' | translate }}</h1>
+<h1 class="page-title"><%= _(name).capitalize() %></h1>
 
 <div class="fs-content clearfix">
   <div class="fs-content-main">
-    <h1>I am ur content!</h1>
+<% if (directive) { %>
+    <%= directiveTag %>
+<% } else { %>
+    <h1><%= _(name).capitalize() %></h1>
+<% } %>
   </div>
 
   <div class="fs-content-supporting">
     <div class="fs-content-supporting-module">
-      <h3>I am ur sidebar!</h3>
+      <h3>Sidebar</h3>
     </div>
   </div>
 </div>

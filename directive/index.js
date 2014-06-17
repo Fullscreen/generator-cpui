@@ -1,11 +1,39 @@
 var NamedBase = require('../lib/module-and-named-base.js')
-  , yosay = require('yosay')
+  , pluralize = require('pluralize')
   , path = require('path')
 
 module.exports = NamedBase.extend({
   init: function() {
-    this.log(yosay("Let's create you a new directive!"))
+    this.say("Let's create you a new directive!")
 
+    // Initing vars we'll use in our underscore template
+    this.collection = undefined
+    this.model = undefined
+
+    this.option('collection', {
+      desc: 'A collection to iterate over in your directive',
+      defaults: false
+    })
+
+    this.option('model', {
+      desc: 'A model to use with a given collection',
+      defaults: false
+    })
+
+    this.option('hintHTML', {
+      defaults: false,
+      hidden: true
+    })
+
+    if (this.options.collection) {
+      this.collection = this._.classify(this.options.collection)
+    }
+
+    if (this.options.model) {
+      this.model = this._.classify(this.options.model)
+    }
+
+    this.pluralize = pluralize
     this.directive = this._.camelize(this.name)
     this.directiveDashed = this._.dasherize(this.name)
     this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"

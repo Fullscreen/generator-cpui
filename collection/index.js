@@ -1,10 +1,22 @@
 var NamedBase = require('../lib/module-and-named-base.js')
-  , yosay = require('yosay')
   , path = require('path')
 
 module.exports = NamedBase.extend({
   init: function() {
-    this.log(yosay("Let's create you a new collection!"))
+    this.say("Let's create you a new collection!")
+
+    // Initing vars we'll use in our underscore template
+    this.model = undefined
+
+    this.option('model', {
+      desc: 'A model to require for this collection',
+      defaults: false
+    })
+
+    if (this.options.model) {
+      this.model = this._.classify(this.options.model)
+    }
+
     this.collection = this.name
     this.collectionClass = this._.classify(this.collection)
   },

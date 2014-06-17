@@ -17,7 +17,8 @@
   "dependencies": {
     "yosay": "^0.1.0",
     "yeoman-generator": "~0.17.0",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "pluralize": "0.0.10"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"

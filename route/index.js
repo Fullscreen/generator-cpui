@@ -1,16 +1,29 @@
 var Base = require('../lib/cpui-base')
-  , yosay = require('yosay')
   , path = require('path')
 
 module.exports = Base.extend({
   init: function() {
-    this.log(yosay("Let's create you a new route!"))
+    this.say("Let's create you a new route!")
+
+    // Initing vars we'll use in our underscore template
+    this.directive = undefined
+    this.directiveTag = undefined
 
     this.argument('name', {
       desc: "The name of your new route",
       type: String,
       required: true
     })
+
+    this.option('directive', {
+      desc: 'A directive to drop into your new page',
+      defaults: false
+    })
+
+    if (this.options.directive) {
+      this.directive = this._.dasherize(this.options.directive)
+      this.directiveTag = "<"+this.directive+"></"+this.directive+">"
+    }
 
     this.route      = this._.dasherize(this.name)
     this.routeTpml  = this._.dasherize(this.name + '-page')
@@ -21,8 +34,8 @@ module.exports = Base.extend({
     var tmplPath = path.join(this.cpui.paths.scripts, 'templates')
       , ctrlPath = path.join(this.cpui.paths.scripts, 'controllers')
 
-    this.copy('_template.html', path.join(tmplPath, this.routeTpml + '.html'))
-    this.copy('_controller.coffee', path.join(ctrlPath, this.route + '.coffee'))
+    this.template('_template.html', path.join(tmplPath, this.routeTpml + '.html'))
+    this.template('_controller.coffee', path.join(ctrlPath, this.route + '.coffee'))
   },
 
   rewriteJSRoutes: function() {

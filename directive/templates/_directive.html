@@ -1,7 +1,18 @@
 <div class="<%= directiveDashed %>-container">
   <h1>{{ greeting }}</h1>
+<% if (collection) { %>
+  <div
+    ng-if="collection.length"
+    ng-repeat="item in collection.models"
+    class="<%= directiveDashed %>-list"
+  >
+    <div class="<%= directiveDashed %>-item">
+      Item #{{ item.id }}
+    </div>
+  </div>
+<% } %>
 </div>
 
-<!-- Now, just drop this tag into your HTML:
+<% if (options.hintHTML) { %><!-- Now, just drop this tag into your HTML:
   <%= directiveTag %>
--->
+--><% } %>

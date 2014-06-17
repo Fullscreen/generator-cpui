@@ -1,10 +1,9 @@
 var NamedBase = require('../lib/module-and-named-base.js')
-  , yosay = require('yosay')
   , path = require('path')
 
 module.exports = NamedBase.extend({
   init: function() {
-    this.log(yosay("Let's create you a new model!"))
+    this.say("Let's create you a new model!")
     this.model = this.name
   },
 
