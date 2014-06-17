@@ -3,22 +3,11 @@ CPUI Module Generator
 
 Custom code generator for Creator Platform Angular modules
 
-``` shell
-yo cpui --help
+![](http://i.imgur.com/ga4IKmt.png)
 
-Description:
-    Creates a new CPUI module
+## Usage
 
-Example:
-    yo cpui
-
-    This will create:
-      app/assets/scripts/[your module name]
-      app/assets/scripts/[your module name]/index.coffee
-      app/assets/stylesheets/[your module name]
-      app/assets/scripts/[your module name]/index.scss
-      spec/js/[your module name]
-
-    As well as require your module in:
-      /app/assets/scripts/app.coffe
-```
+1. Install yoeman: `npm install -g yo`
+2. Add the following to your package.json under `devDependencies`:  
+   `"generator-cpui": "git+ssh://git@github.com:fullscreen/generator-cpui.git#master"`
+3. `yo:cpui` to get a menu of possible generators
