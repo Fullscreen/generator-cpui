@@ -14,6 +14,7 @@ module.exports = Base.extend({
 
     this.getModuleName(function(name) {
       self.module = name
+      self.moduleSingular = pluralize.singular(name)
       self.createModule()
       done()
     })
@@ -46,7 +47,7 @@ module.exports = Base.extend({
       options: {
         mute: true,
         module: this.module,
-        model: this.module
+        model: this.moduleSingular
       }
     })
   },
@@ -58,8 +59,8 @@ module.exports = Base.extend({
       options: {
         mute: true,
         module: this.module,
-        model: this.module,
-        collection: pluralize(this.module)
+        model: (this.selections.model ? this.moduleSingular : undefined),
+        collection: this.module
       }
     })
   },
@@ -73,8 +74,8 @@ module.exports = Base.extend({
         module: this.module,
         hintHTML: false,
         directive: this.module,
-        model: (this.selections.model ? this.module : false),
-        collection: (this.selections.collection ? pluralize(this.module) : false)
+        model: (this.selections.model ? this.moduleSingular : false),
+        collection: (this.selections.collection ? this.module : false)
       }
     })
   },
@@ -85,7 +86,7 @@ module.exports = Base.extend({
     this.invoke('cpui:route', {
       options: {
         mute: true,
-        route: pluralize(this.module),
+        route: this.module,
         directive: this.module
       }
     })

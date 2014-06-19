@@ -3,11 +3,11 @@
 <% if (collection) { %>
   <div
     ng-if="collection.length"
-    ng-repeat="item in collection.models"
-    class="<%= directiveDashed %>-list"
+    ng-repeat="model in collection.models"
+    class="<%= _.dasherize(collection.toLowerCase()) %>-list"
   >
-    <div class="<%= directiveDashed %>-item">
-      Item #{{ item.id }}
+    <div class="<%= _.dasherize(pluralize.singular(collection.toLowerCase())) %>-item">
+      Item #{{ model.id }}
     </div>
   </div>
 <% } %>
