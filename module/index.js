@@ -38,7 +38,7 @@ module.exports = Base.extend({
 
   files: function() {
     var paths = this.cpui.paths
-
+    console.log(paths)
     // Module directory
     this.mkdir(path.join(paths.scripts, this.module))
     this.template('_index.coffee', path.join(paths.scripts, this.module, 'index.coffee'))
