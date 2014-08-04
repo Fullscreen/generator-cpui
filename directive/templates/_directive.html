@@ -1,5 +1,5 @@
 <div class="<%= directiveDashed %>-container">
-  <h1>{{ greeting }}</h1>
+  <h1>{{ ctrl.greeting() }}</h1>
 <% if (collection) { %>
   <div
     ng-if="collection.length"
