@@ -13,7 +13,7 @@ module.exports = Base.extend({
 
   _setController: function(name) {
     this.ctrlFile  = this._.dasherize(name)
-    this.ctrlClass = this._.classify(name + ' controller')
+    this.ctrlClass = this._.classify(name + ' ctrl')
   },
 
   init: function() {

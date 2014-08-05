@@ -32,6 +32,7 @@ module.exports = Base.extend({
     this.directive = this._.camelize(name)
     this.directiveDashed = this._.dasherize(name)
     this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"
+    this.ctrlClass = this._.classify(name + ' ctrl')
   },
 
   init: function() {
