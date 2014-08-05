@@ -42,7 +42,7 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var paths = this.cpui.paths
+    var paths = this.config.get('paths')
       , collectionPath = path.join(paths.scripts, this.module, 'collections')
       , specPath = path.join(paths.specs, this.module, 'collections')
 

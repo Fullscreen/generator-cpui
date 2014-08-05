@@ -1,0 +1,13 @@
+{
+  "rootModule": "fs.platform",
+  "namespace": "fs.",
+  "separators": {
+    "pre": "#== ",
+    "post": "#/= "
+  },
+  "paths": {
+    "scripts": "app/assets/javascripts",
+    "styles": "app/assets/stylesheets",
+    "specs": "spec/js"
+  }
+}

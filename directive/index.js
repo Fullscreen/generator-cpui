@@ -70,7 +70,7 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var paths = this.cpui.paths
+    var paths = this.config.get('paths')
       , directivePath = path.join(paths.scripts, this.module, 'directives')
       , tmplPath = path.join(paths.scripts, this.module, 'templates')
       , specPath = path.join(paths.specs, this.module, 'directives')
