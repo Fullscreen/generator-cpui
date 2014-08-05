@@ -3,7 +3,6 @@
   "version": "1.2.0",
   "description": "Custom code generator for Creator Platform Angular modules",
   "license": "none",
-  "private": true,
   "main": "app/index.js",
   "repository": "Fullscreen/generator-cpui",
   "author": {
