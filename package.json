@@ -1,6 +1,6 @@
 {
   "name": "generator-cpui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Custom code generator for Creator Platform Angular modules",
   "license": "none",
   "main": "app/index.js",
