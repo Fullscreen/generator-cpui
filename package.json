@@ -10,6 +10,10 @@
     "email": "paul@8-bitdesign.com",
     "url": "https://github.com/8bitDesigner"
   },
+  "contributors": [{
+    "name": "Brandon Aaskov",
+    "email": "brandonaaskov@gmail.com"
+  }],
   "dependencies": {
     "yosay": "^0.1.0",
     "yeoman-generator": "~0.17.0",
