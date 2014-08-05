@@ -8,6 +8,5 @@ Custom code generator for Creator Platform Angular modules
 ## Usage
 
 1. Install yoeman: `npm install -g yo`
-2. Add the following to your package.json under `devDependencies`:  
-   `"generator-cpui": "git+ssh://git@github.com:fullscreen/generator-cpui.git#master"`
+2. Install the generator: `npm install -g generator-cpui`
 3. `yo:cpui` to get a menu of possible generators
