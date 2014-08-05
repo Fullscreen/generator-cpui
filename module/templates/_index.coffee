@@ -1,4 +1,4 @@
 #= require_self
 #= require_tree .
 
-angular.module('<%= namespace(module) %>', ['<%= cpui.rootModule %>', 'fs.collections'])
+angular.module('<%= namespace(module) %>', ['<%= config.get("rootModule") %>', 'fs.collections'])
