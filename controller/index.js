@@ -38,7 +38,7 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var paths = this.cpui.paths
+    var paths = this.config.get('paths')
       , ctrlPath = path.join(paths.scripts, this.module, 'controllers')
       , specPath = path.join(paths.specs, this.module, 'controllers')
 
