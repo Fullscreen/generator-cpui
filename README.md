@@ -11,15 +11,16 @@ Custom code generator for Creator Platform Angular modules
 - Assumes your Angular application file is named `app.coffee`
 - Require scripts as-needed in `application.html.erb` using the built-in Rails asset pipeline
 	- Opening and closing syntax for loading scripts via sprockets: 
-```
-#== Requiring our modules
-#/= Requiring our modules
-```
+	```
+	#== Requiring our modules
+	#/= Requiring our modules
+	```
+	
 	- Opening and closing syntax for loading modules into Angular's DI: 
-```
-#== Our modules
-#/= Our modules
-```
+	```
+	#== Our modules
+	#/= Our modules
+	```
 - Never use `#= require tree .`
 
 ## Usage
