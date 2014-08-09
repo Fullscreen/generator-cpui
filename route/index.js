@@ -41,7 +41,7 @@ module.exports = Base.extend({
   },
 
   getName: function() {
-    if (this.route) { return; }
+    if (this.route) { return }
 
     var done = this.async()
       , self = this;
