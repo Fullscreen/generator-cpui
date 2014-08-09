@@ -1,26 +1,22 @@
 var Base = require('../lib/cpui-base.js')
-    , _ = require('underscore')
-    , done = undefined
-    , yo = undefined
+  , _ = require('underscore')
+  , self = undefined
+  , done = undefined
 
 module.exports = Base.extend({
-  init: function() {
-    yo = this
-    done = this.async()
-    yo.buildSomething()
-  },
-
-  buildSomething: function () {
-
-    var noConfig = _.isEmpty(yo.config.getAll())
-    if (noConfig) {
-      var message = "Let's not get ahead of ourselves. Let's make you a " +
-          "config first."
-      yo.say(message)
-      yo.invoke('cpui:bootstrap', {options: {mute: true}})
-    }
-    else {
-      yo.say("Let's build something cool")
+  init: function () {
+    self = this
+    done = this.async
+    
+//    var noConfig = _.isEmpty(this.config.getAll())
+//    if (noConfig) {
+//      var message = "Let's not get ahead of ourselves. We need to make you a " +
+//          "config file first. (.yo-rc.json)"
+//      this.say(message)
+//      this.invoke('cpui:bootstrap', {options: {mute: true}})
+//    }
+//    else {
+      this.say("Let's build something cool")
 
       var question = {
         type: 'list',
@@ -37,9 +33,9 @@ module.exports = Base.extend({
         ]
       }
 
-      yo.prompt(question, function (props) {
-        yo.invoke(props.generator, {options: {mute: true}})
+      this.prompt(question, function (props) {
+        self.invoke(props.generator, {options: {mute: true}})
       })
-    }
+//    }
   }
 })

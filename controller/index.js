@@ -1,5 +1,8 @@
 var Base = require('../lib/module-base.js')
+  , _ = require('underscore')
   , path = require('path')
+  , self = undefined
+  , done = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -11,25 +14,28 @@ module.exports = Base.extend({
     })
   },
 
+  init: function() {
+    self = this
+    done = this.async()
+
+    console.log(_.methods(this))
+    if (this.noConfig()) this.createConfig()
+
+    self.say("Let's create you a new controller!")
+    self.getModule(done)
+
+    if (self.options.controller) {
+      self._setController(self.options.controller)
+    }
+  },
+
   _setController: function(name) {
     this.ctrlFile  = this._.dasherize(name)
     this.ctrlClass = this._.classify(name + ' ctrl')
   },
 
-  init: function() {
-    this.say("Let's create you a new controller!")
-    this.getModule(this.async())
-
-    if (this.options.controller) {
-      this._setController(this.options.controller)
-    }
-  },
-
   getName: function() {
     if (this.ctrlClass) { return; }
-
-    var done = this.async()
-      , self = this;
 
     this.ask("What's the name of your controller?", function(name) {
       self._setController(name)
