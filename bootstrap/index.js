@@ -1,16 +1,19 @@
-var Base = require('../lib/cpui-base.js'),
-  _ = require('underscore'),
-  yo = null,
-  _defaults = null,
-  _questions = null
+var Base = require('../lib/cpui-base.js')
+  , _ = require('underscore')
+  , self = null
+  , done = null
+  , _defaults = null
 
 module.exports = Base.extend({
   constructor: function() {
-    yo = this
-    Base.apply(yo, arguments)
-    _defaults = yo.src.readJSON('../../config.json')
+    Base.apply(this, arguments)
+    self = this
+    done = this.async()
+    _defaults = this.src.readJSON('../../config.json')
+  },
 
-    _questions = [
+  init: function () {
+    var questions = [
       {
         type: 'input',
         name: 'rootModule',
@@ -42,17 +45,25 @@ module.exports = Base.extend({
         message: "Where are your test files?"
       }
     ]
+
+    if (this.noConfig()) {
+      var message = "Let's not get ahead of ourselves. We need to make you a " +
+          "config file first. (.yo-rc.json)"
+      this.say(message)
+    }
+
+    this.prompt(questions, this._handleConfigAnswers)
   },
 
-  init: function () {
-    yo.prompt(_questions, yo._handleConfigAnswers)
+  noConfig: function () {
+    return _.isEmpty(self.config.getAll())
   },
 
   _handleConfigAnswers: function (answers) {
-    var customConfig = yo._answersToConfig(answers)
+    var customConfig = this._answersToConfig(answers)
     var fullConfig = _.defaults(customConfig, _defaults)
-    yo.config.defaults(fullConfig) // does a .save() for us too
-    yo.async()
+    this.config.defaults(fullConfig) // does a .save() for us too
+    done()
   },
 
   /**
