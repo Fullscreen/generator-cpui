@@ -18,6 +18,10 @@ module.exports = Base.extend({
     self = this
     done = this.async()
 
+    this.createConfig(this._create)
+  },
+
+  _create: function () {
     self.say("Let's create you a new controller!")
     self.getModule(done)
 
