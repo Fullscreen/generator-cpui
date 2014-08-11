@@ -10,7 +10,7 @@ module.exports = Base.extend({
     
 //    var noConfig = _.isEmpty(this.config.getAll())
 //    if (noConfig) {
-//      var message = "Let's not get ahead of ourselves. We need to make you a " +
+//      var message = "Let' s not get ahead of ourselves. We need to make you a " +
 //          "config file first. (.yo-rc.json)"
 //      this.say(message)
 //      this.invoke('cpui:bootstrap', {options: {mute: true}})
