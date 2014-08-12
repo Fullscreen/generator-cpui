@@ -1,13 +1,10 @@
 var Base = require('../lib/module-base.js')
-  , Bootstrap = require('../bootstrap')
   , _ = require('underscore')
   , path = require('path')
   , self = undefined
   , done = undefined
 
-console.log('test', Bootstrap.extend({}))
-
-module.exports = Bootstrap.extend({
+module.exports = Base.extend({
   constructor: function() {
     Base.apply(this, arguments)
 
@@ -21,9 +18,8 @@ module.exports = Bootstrap.extend({
     self = this
     done = this.async()
 
-//    console.log('config exists', self.configExists())
-
-    self._create()
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
   _create: function () {
