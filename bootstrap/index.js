@@ -7,12 +7,37 @@ var Base = require('../lib/cpui-base.js')
 module.exports = Base.extend({
   constructor: function() {
     Base.apply(this, arguments)
-    self = this
-    done = this.async()
-    _defaults = this.src.readJSON('../../config.json')
   },
 
   init: function () {
+
+    self = this
+    _defaults = this.src.readJSON('../../config.json')
+    self.createConfig()
+  },
+
+  configExists: function () {
+    var config = this.config.getAll()
+
+    // TODO do more than just checking for the existence of _any_ config item
+    return (_.isEmpty(config)) ? false : true
+  },
+
+  createConfig: function () {
+    done = this.async()
+    var message = ""
+
+    if (self.configExists()) {
+      message = "You have a config file already, but let's just make " +
+        "a new one anyway."
+      self.say(message)
+    }
+    else {
+      message = "Let's not get ahead of ourselves. We need to make you a " +
+        "config file first. (.yo-rc.json)"
+      self.say(message)
+    }
+
     var questions = [
       {
         type: 'input',
@@ -45,25 +70,7 @@ module.exports = Base.extend({
         message: "Where are your test files?"
       }
     ]
-
-    if (this.noConfig()) {
-      var message = "Let's not get ahead of ourselves. We need to make you a " +
-          "config file first. (.yo-rc.json)"
-      this.say(message)
-    }
-
-    this.prompt(questions, this._handleConfigAnswers)
-  },
-
-  noConfig: function () {
-    return _.isEmpty(self.config.getAll())
-  },
-
-  _handleConfigAnswers: function (answers) {
-    var customConfig = this._answersToConfig(answers)
-    var fullConfig = _.defaults(customConfig, _defaults)
-    this.config.defaults(fullConfig) // does a .save() for us too
-    done()
+    this.prompt(questions, self.handleConfigAnswers)
   },
 
   /**
@@ -72,7 +79,7 @@ module.exports = Base.extend({
    * to use alongside our default config (config.json): in this case, that
    * method is the _.defaults() method above.
    */
-  _answersToConfig: function (answers) {
+  answersToConfig: function (answers) {
     var config = {}
 
     _(answers).each(function (answer, key) {
@@ -91,5 +98,12 @@ module.exports = Base.extend({
     })
 
     return config
+  },
+
+  handleConfigAnswers: function (answers) {
+    var customConfig = self.answersToConfig(answers)
+    var fullConfig = _.defaults(customConfig, _defaults)
+    self.config.defaults(fullConfig) // does a .save() for us too
+    self.say("Okay, config file created!")
   }
 })

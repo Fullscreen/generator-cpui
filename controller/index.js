@@ -18,7 +18,7 @@ module.exports = Base.extend({
     self = this
     done = this.async()
 
-    this.createConfig(this._create)
+    if (this.configExists()) this.createConfig(this._create)
   },
 
   _create: function () {

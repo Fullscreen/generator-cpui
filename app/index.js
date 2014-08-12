@@ -1,12 +1,10 @@
 var Base = require('../lib/cpui-base.js')
   , _ = require('underscore')
   , self = undefined
-  , done = undefined
 
 module.exports = Base.extend({
   init: function () {
     self = this
-    done = this.async
 
     this.say("Let's build something cool")
 
