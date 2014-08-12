@@ -44,7 +44,7 @@ module.exports = Base.extend({
     if (this.route) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your route?", function(name) {
       self._setRoute(name)

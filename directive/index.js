@@ -58,10 +58,10 @@ module.exports = Base.extend({
   },
 
   getName: function() {
-    if (this.directive) { return; }
+    if (this.directive) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your directive?", function(name) {
       self._setDirective(name)

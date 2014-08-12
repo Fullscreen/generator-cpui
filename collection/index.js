@@ -30,10 +30,10 @@ module.exports = Base.extend({
   },
 
   getName: function() {
-    if (this.collection) { return; }
+    if (this.collection) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your collection?", function(name) {
       self._setCollection(name)

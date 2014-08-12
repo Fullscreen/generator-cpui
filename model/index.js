@@ -26,10 +26,10 @@ module.exports = Base.extend({
   },
 
   getName: function() {
-    if (this.model) { return; }
+    if (this.model) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your model?", function(model) {
       self._setModel(model)

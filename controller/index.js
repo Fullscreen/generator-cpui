@@ -36,7 +36,7 @@ module.exports = Base.extend({
   },
 
   getName: function() {
-    if (this.ctrlClass) { return; }
+    if (this.ctrlClass) { return }
 
     this.ask("What's the name of your controller?", function(name) {
       self._setController(name)
