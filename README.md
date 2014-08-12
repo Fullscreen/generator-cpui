@@ -10,13 +10,13 @@ Custom code generator for Creator Platform Angular modules
 - Encourages module creation for code separation (and makes it easy)
 - Assumes your Angular application file is named `app.coffee`
 - Require scripts as-needed in `application.html.erb` using the built-in Rails asset pipeline
-	- Opening and closing syntax for loading scripts via sprockets: 
+	- Opening and closing syntax for loading scripts via sprockets:
 	```
 	#== Requiring our modules
 	#/= Requiring our modules
 	```
-	
-	- Opening and closing syntax for loading modules into Angular's DI: 
+
+	- Opening and closing syntax for loading modules into Angular's DI:
 	```
 	#== Our modules
 	#/= Our modules
@@ -40,3 +40,12 @@ If you don't have a `.yo-rc.json` file at the root of your repo, **don't worry**
 ![](http://cl.ly/Wyx0/Image%202014-08-08%20at%202.01.29%20PM.png)
 
 *Note: There are separators used so that we know where to inject items into files. It's unlikely that you'll need to change them. If you do, you can tweak them manually in the `.yo-rc.json` file that gets created for you.*
+
+
+## Angular Rails Templates
+This generator creates templates assuming that they're being loaded via [`angular-rails-templates`](https://github.com/pitr/angular-rails-templates). The takeaway is this:
+
+1. add `gem 'angular-rails-templates'` to your Gemfile
+2. in your main application javascript file, load in `angular-rails-templates` via sprockets _last_. Here's an example:
+![](http://cl.ly/X0Tt/Image%202014-08-12%20at%203.26.22%20PM.png)
+3. make sure to actually add `'templates'` as a module that you load via Angular's DI, also in your main application file (you can see this in the example image above)
