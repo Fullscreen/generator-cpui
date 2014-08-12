@@ -6,12 +6,13 @@ var Base = require('../lib/cpui-base.js')
   , _defaults = null
 
 module.exports = Base.extend({
-  constructor: function() {
+  constructor: function(dingus, bacon, fart) {
+    console.log('constructor', [dingus, bacon, fart])
     Base.apply(this, arguments)
   },
 
   init: function () {
-
+    console.log('init', arguments)
     self = this
     _defaults = this.src.readJSON('../../config.json')
     self.createConfig()
