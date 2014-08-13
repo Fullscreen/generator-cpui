@@ -1,5 +1,6 @@
 var Base = require('../lib/cpui-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -16,14 +17,14 @@ module.exports = Base.extend({
     })
   },
 
-  _setRoute: function(route) {
-    this.name       = route
-    this.route      = this._.dasherize(route)
-    this.routeTpml  = this._.dasherize(route + '-page')
-    this.routeTitle = this._.camelize(route + '-controller')
+  init: function() {
+    self = this
+    
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new route!")
 
     // Initing vars we'll use in our underscore template
@@ -38,6 +39,13 @@ module.exports = Base.extend({
     if (this.options.route) {
       this._setRoute(this.options.route)
     }
+  },
+
+  _setRoute: function(route) {
+    this.name       = route
+    this.route      = this._.dasherize(route)
+    this.routeTpml  = this._.dasherize(route + '-page')
+    this.routeTitle = this._.camelize(route + '-controller')
   },
 
   getName: function() {
@@ -79,4 +87,3 @@ module.exports = Base.extend({
     this.dest.write(routesPath, routes)
   }
 })
-

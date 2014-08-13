@@ -1,5 +1,6 @@
 var Base = require('../lib/module-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -11,18 +12,25 @@ module.exports = Base.extend({
     })
   },
 
-  _setModel: function(name) {
-    this.model = name
-    this.modelClass = this._.classify(name)
+  init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new model!")
     this.getModule(this.async())
 
     if (this.options.model) {
       this._setModel(this.options.model)
     }
+  },
+
+  _setModel: function(name) {
+    this.model = name
+    this.modelClass = this._.classify(name)
   },
 
   getName: function() {

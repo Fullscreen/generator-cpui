@@ -1,5 +1,6 @@
 var Base = require('../lib/module-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -11,12 +12,14 @@ module.exports = Base.extend({
     })
   },
 
-  _setCollection: function(name) {
-    this.collection = name
-    this.collectionClass = this._.classify(this.collection)
+  init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new collection!")
     this.getModule(this.async())
 
@@ -27,6 +30,11 @@ module.exports = Base.extend({
     if (this.options.collection) {
       this._setCollection(this.options.collection)
     }
+  },
+
+  _setCollection: function(name) {
+    this.collection = name
+    this.collectionClass = this._.classify(this.collection)
   },
 
   getName: function() {

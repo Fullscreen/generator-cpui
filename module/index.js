@@ -1,5 +1,6 @@
 var Base = require('../lib/cpui-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -12,6 +13,13 @@ module.exports = Base.extend({
   },
 
   init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
+  },
+
+  _create: function () {
     this.say("Let's create you a new module!")
 
     if (this.options.module) {
@@ -72,4 +80,3 @@ module.exports = Base.extend({
     this.dest.write(testFiles, JSON.stringify(files, null, 2))
   }
 })
-

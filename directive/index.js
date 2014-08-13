@@ -1,6 +1,7 @@
 var Base = require('../lib/module-base.js')
   , pluralize = require('pluralize')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -28,14 +29,14 @@ module.exports = Base.extend({
     })
   },
 
-  _setDirective: function(name) {
-    this.directive = this._.camelize(name)
-    this.directiveDashed = this._.dasherize(name)
-    this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"
-    this.ctrlClass = this._.classify(name + ' ctrl')
+  init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new directive!")
     this.pluralize = pluralize
     this.getModule(this.async())
@@ -55,6 +56,13 @@ module.exports = Base.extend({
     if (this.options.directive) {
       this._setDirective(this.options.directive)
     }
+  },
+
+  _setDirective: function(name) {
+    this.directive = this._.camelize(name)
+    this.directiveDashed = this._.dasherize(name)
+    this.directiveTag = "<"+this.directiveDashed+"></"+this.directiveDashed+">"
+    this.ctrlClass = this._.classify(name + ' ctrl')
   },
 
   getName: function() {
@@ -88,4 +96,3 @@ module.exports = Base.extend({
     this.template('_test.coffee', path.join(specPath, this.directiveDashed+'.coffee'))
   }
 })
-
