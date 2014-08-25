@@ -1,5 +1,6 @@
 var Base = require('../lib/module-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -11,12 +12,14 @@ module.exports = Base.extend({
     })
   },
 
-  _setModel: function(name) {
-    this.model = name
-    this.modelClass = this._.classify(name)
+  init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new model!")
     this.getModule(this.async())
 
@@ -25,11 +28,16 @@ module.exports = Base.extend({
     }
   },
 
+  _setModel: function(name) {
+    this.model = name
+    this.modelClass = this._.classify(name)
+  },
+
   getName: function() {
-    if (this.model) { return; }
+    if (this.model) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your model?", function(model) {
       self._setModel(model)
@@ -38,7 +46,7 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var paths = this.cpui.paths
+    var paths = this.config.get('paths')
       , modelPath = path.join(paths.scripts, this.module, 'models')
       , specPath = path.join(paths.specs, this.module, 'models')
 

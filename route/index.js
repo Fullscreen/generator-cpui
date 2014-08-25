@@ -1,5 +1,6 @@
 var Base = require('../lib/cpui-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -16,14 +17,14 @@ module.exports = Base.extend({
     })
   },
 
-  _setRoute: function(route) {
-    this.name       = route
-    this.route      = this._.dasherize(route)
-    this.routeTpml  = this._.dasherize(route + '-page')
-    this.routeTitle = this._.camelize(route + '-controller')
+  init: function() {
+    self = this
+    
+    if (self.configExists()) self._create()
+    else self.createConfig()
   },
 
-  init: function() {
+  _create: function () {
     this.say("Let's create you a new route!")
 
     // Initing vars we'll use in our underscore template
@@ -40,11 +41,18 @@ module.exports = Base.extend({
     }
   },
 
+  _setRoute: function(route) {
+    this.name       = route
+    this.route      = this._.dasherize(route)
+    this.routeTpml  = this._.dasherize(route + '-page')
+    this.routeTitle = this._.camelize(route + '-controller')
+  },
+
   getName: function() {
-    if (this.route) { return; }
+    if (this.route) { return }
 
     var done = this.async()
-      , self = this;
+      , self = this
 
     this.ask("What's the name of your route?", function(name) {
       self._setRoute(name)
@@ -53,15 +61,15 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var tmplPath = path.join(this.cpui.paths.scripts, 'templates')
-      , ctrlPath = path.join(this.cpui.paths.scripts, 'controllers')
+    var tmplPath = path.join(this.config.get('paths').scripts, 'templates')
+      , ctrlPath = path.join(this.config.get('paths').scripts, 'controllers')
 
     this.template('_template.html', path.join(tmplPath, this.routeTpml + '.html'))
     this.template('_controller.coffee', path.join(ctrlPath, this.route + '.coffee'))
   },
 
   rewriteJSRoutes: function() {
-    var routesPath = path.join(this.cpui.paths.scripts, 'config', 'routes.coffee')
+    var routesPath = path.join(this.config.get('paths').scripts, 'config', 'routes.coffee')
       , routes = this.dest.read(routesPath)
       , newRoute = this.src.read('_route')
 
@@ -79,4 +87,3 @@ module.exports = Base.extend({
     this.dest.write(routesPath, routes)
   }
 })
-

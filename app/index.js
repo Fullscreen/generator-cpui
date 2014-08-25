@@ -1,13 +1,14 @@
 var Base = require('../lib/cpui-base.js')
+  , _ = require('underscore')
+  , self = undefined
 
 module.exports = Base.extend({
-  init: function() {
-    var done = this.async()
-      , self = this
+  init: function () {
+    self = this
 
     this.say("Let's build something cool")
 
-    this.prompt([{
+    var question = {
       type: 'list',
       name: 'generator',
       message: "What do you want to build today?",
@@ -17,12 +18,13 @@ module.exports = Base.extend({
         { value: 'cpui:collection', name: 'A new collection' },
         { value: 'cpui:directive',  name: 'A new directive' },
         { value: 'cpui:controller', name: 'A new controller' },
-        { value: 'cpui:route',      name: 'A new route' }
+        { value: 'cpui:route',      name: 'A new route' },
+        { value: 'cpui:bootstrap',  name: 'A new config file' }
       ]
-    }], function (props) {
+    }
+
+    this.prompt(question, function (props) {
       self.invoke(props.generator, {options: {mute: true}})
-      done()
     })
   }
 })
-

@@ -1,5 +1,6 @@
 var Base = require('../lib/cpui-base.js')
   , path = require('path')
+  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -12,6 +13,13 @@ module.exports = Base.extend({
   },
 
   init: function() {
+    self = this
+
+    if (self.configExists()) self._create()
+    else self.createConfig()
+  },
+
+  _create: function () {
     this.say("Let's create you a new module!")
 
     if (this.options.module) {
@@ -37,7 +45,7 @@ module.exports = Base.extend({
   },
 
   files: function() {
-    var paths = this.cpui.paths
+    var paths = this.config.get('paths')
     // Module directory
     this.mkdir(path.join(paths.scripts, this.module))
     this.template('_index.coffee', path.join(paths.scripts, this.module, 'index.coffee'))
@@ -54,7 +62,7 @@ module.exports = Base.extend({
   // Inject our `fs.module` entry into the dependencies
   // for the main CPUI app
   rewriteAppCoffee: function() {
-    var appCoffee = path.join(this.cpui.paths.scripts, 'app.coffee')
+    var appCoffee = path.join(this.config.get('paths').scripts, 'app.coffee')
       , contents = this.readFileAsString(appCoffee)
 
     // Inject our module dependencies
@@ -72,4 +80,3 @@ module.exports = Base.extend({
     this.dest.write(testFiles, JSON.stringify(files, null, 2))
   }
 })
-
