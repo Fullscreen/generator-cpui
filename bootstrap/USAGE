@@ -1,9 +1,0 @@
-Description:
-    Create a .yo-rc.json file if one doesn't exist, and fills in any blanks if
-    it does exist.
-
-Example:
-    yo cpui:config
-
-    This will create:
-      * .yo-rc.json
