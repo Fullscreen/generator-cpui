@@ -1,17 +1,15 @@
 var Base = require('../lib/module-base.js')
   , pluralize = require('pluralize')
   , path = require('path')
-  , self = undefined
 
 module.exports = Base.extend({
   init: function() {
-    self = this
-
-    if (self.configExists()) self._create()
-    else self.createConfig()
+    if (!this.configExists()) {
+      this.createConfig(this.async())
+    }
   },
 
-  _create: function () {
+  create: function () {
     this.say("Let's scaffold some things out for you!")
     this.selections = {}
   },
