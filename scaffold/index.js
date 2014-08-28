@@ -23,8 +23,7 @@ module.exports = Base.extend({
     this.getModuleName(function(name) {
       self.module = name
       self.moduleSingular = pluralize.singular(name)
-      self.createModule()
-      done()
+      self.createModule(done)
     })
   },
 
