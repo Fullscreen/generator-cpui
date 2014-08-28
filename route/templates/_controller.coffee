@@ -1,4 +1,4 @@
-app = angular.module('<%= cpui.rootModule %>')
+app = angular.module('<%= config.get("rootModule") %>')
 
 app.controller '<%= routeTitle %>', ($scope) ->
   $scope.sayHi = ->
