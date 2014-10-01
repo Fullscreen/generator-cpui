@@ -1,6 +1,5 @@
 var Base = require('../lib/cpui-base.js')
   , path = require('path')
-  , self = undefined
 
 module.exports = Base.extend({
   constructor: function() {
@@ -18,13 +17,12 @@ module.exports = Base.extend({
   },
 
   init: function() {
-    self = this
-    
-    if (self.configExists()) self._create()
-    else self.createConfig()
+    if (!this.configExists()) {
+      this.createConfig(this.async())
+    }
   },
 
-  _create: function () {
+  create: function () {
     this.say("Let's create you a new route!")
 
     // Initing vars we'll use in our underscore template

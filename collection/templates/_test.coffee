@@ -7,7 +7,7 @@ describe "The <%= collectionClass %> collection", ->
 
     inject (_<%= collectionClass %>_, <%= model ? '_'+model+'_' : '_BaseModel_' %>) ->
       <%= collectionClass %> = _<%= collectionClass %>_
-      <%= model ? model + '= _'+model+'_' : "BaseModel = _BaseModel_" %>
+      <%= model ? model + ' = _'+model+'_' : "BaseModel = _BaseModel_" %>
 
   it "should have tests", ->
     instance = new <%= collectionClass %>()
