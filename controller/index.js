@@ -39,6 +39,7 @@ module.exports = Base.extend({
     if (this.ctrlClass) { return }
 
     var done = this.async()
+      , self = this
 
     this.ask("What's the name of your controller?", function(name) {
       self._setController(name)
